@@ -10,10 +10,6 @@ final class CommonMark implements MarkdownInterface
     /**
      * @var CommonMarkConverter
      */
-    protected $extraTextConverter;
-    /**
-     * @var CommonMarkConverter
-     */
     private $textConverter;
     /**
      * @var CommonMarkConverter
@@ -28,16 +24,16 @@ final class CommonMark implements MarkdownInterface
      * CommonMark constructor.
      *
      * @param CommonMarkConverter $textConverter
-     * @param CommonMarkConverter $extraTextConverter
+     * @param CommonMarkConverter $textExtraConverter
      * @param CommonMarkConverter $lineConverter
      */
     public function __construct(
         CommonMarkConverter $textConverter,
-        CommonMarkConverter $extraTextConverter,
+        CommonMarkConverter $textExtraConverter,
         CommonMarkConverter $lineConverter
     ) {
         $this->textConverter = $textConverter;
-        $this->extraTextConverter = $extraTextConverter;
+        $this->textExtraConverter = $textExtraConverter;
         $this->lineConverter = $lineConverter;
     }
 
