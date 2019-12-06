@@ -11,7 +11,7 @@ namespace RZ\Roadiz\Markdown;
 final class Parsedown implements MarkdownInterface
 {
     /**
-     * @var \ParsedownExtra
+     * @var \Parsedown
      */
     private $instance;
     /**
