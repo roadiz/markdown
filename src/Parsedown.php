@@ -3,6 +3,9 @@ declare(strict_types=1);
 
 namespace RZ\Roadiz\Markdown;
 
+if (!class_exists('\Parsedown')) {
+    trigger_error('Load Parsedown library before using Parsedown wrapper: composer require erusev/parsedown, composer require erusev/parsedown-extra');
+}
 /**
  * Class Parsedown
  *

@@ -8,8 +8,6 @@
         "league/commonmark-extras": "^1.1",
         "league/commonmark-ext-inlines-only": "^1.0",
         "rezozero/commonmark-ext-footnotes": "^0.1 || ^1.0",
-        "erusev/parsedown": "^1.8.0-beta-7 || ^1.8.0",
-        "erusev/parsedown-extra": "^0.8.0-beta-1 || ^0.8.0",
         "pimple/pimple": "^3.2",
         "twig/twig": "^2.0 || ^3.0",
         "doctrine/collections": "^1.6"
