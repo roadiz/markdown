@@ -3,6 +3,8 @@ declare(strict_types=1);
 
 namespace RZ\Roadiz\Markdown;
 
+use Symfony\Component\Stopwatch\Stopwatch;
+
 if (!class_exists('\Parsedown')) {
     trigger_error(
         'Load Parsedown library before using Parsedown wrapper: composer require erusev/parsedown, composer require erusev/parsedown-extra',
@@ -17,6 +19,10 @@ if (!class_exists('\Parsedown')) {
 final class Parsedown implements MarkdownInterface
 {
     /**
+     * @var Stopwatch|null
+     */
+    protected $stopwatch;
+    /**
      * @var \Parsedown
      */
     private $instance;
@@ -27,16 +33,26 @@ final class Parsedown implements MarkdownInterface
 
     /**
      * Parsedown constructor.
+     *
+     * @param Stopwatch|null $stopwatch
      */
-    public function __construct()
+    public function __construct(?Stopwatch $stopwatch = null)
     {
         $this->instance = \Parsedown::instance();
         $this->instanceExtra = \ParsedownExtra::instance();
+        $this->stopwatch = $stopwatch;
     }
 
     public function text(string $markdown = null): string
     {
-        return $this->instance->text($markdown);
+        if (null !== $this->stopwatch) {
+            $this->stopwatch->start(Parsedown::class . '::text');
+        }
+        $html = $this->instance->text($markdown);
+        if (null !== $this->stopwatch) {
+            $this->stopwatch->stop(Parsedown::class . '::text');
+        }
+        return $html;
     }
 
     /**
@@ -47,11 +63,30 @@ final class Parsedown implements MarkdownInterface
      */
     public function textExtra(string $markdown = null): string
     {
-        return $this->instanceExtra->text($markdown);
+        if (null !== $this->stopwatch) {
+            $this->stopwatch->start(Parsedown::class . '::textExtra');
+        }
+        $html = $this->instanceExtra->text($markdown);
+        if (null !== $this->stopwatch) {
+            $this->stopwatch->stop(Parsedown::class . '::textExtra');
+        }
+        return $html;
     }
 
+    /**
+     * @param string|null $markdown
+     *
+     * @return string
+     */
     public function line(string $markdown = null): string
     {
-        return $this->instance->line($markdown);
+        if (null !== $this->stopwatch) {
+            $this->stopwatch->start(Parsedown::class . '::line');
+        }
+        $html = $this->instance->line($markdown);
+        if (null !== $this->stopwatch) {
+            $this->stopwatch->stop(Parsedown::class . '::line');
+        }
+        return $html;
     }
 }

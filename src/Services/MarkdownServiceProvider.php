@@ -21,14 +21,17 @@ final class MarkdownServiceProvider implements ServiceProviderInterface
     {
         /*
          * $container[MarkdownInterface::class] = function (Container $c) {
-         *     return new \RZ\Roadiz\Markdown\Parsedown();
+         *     return new \RZ\Roadiz\Markdown\Parsedown(
+         *         $c->offsetExists('stopwatch') ? $c['stopwatch'] : null
+         *     );
          * };
          */
         $container[MarkdownInterface::class] = function (Container $c) {
             return new CommonMark(
                 $c['commonmark.text_converter'],
                 $c['commonmark.text_extra_converter'],
-                $c['commonmark.line_converter']
+                $c['commonmark.line_converter'],
+                $c->offsetExists('stopwatch') ? $c['stopwatch'] : null
             );
         };
 
