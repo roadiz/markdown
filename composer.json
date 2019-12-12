@@ -11,7 +11,8 @@
         "pimple/pimple": "^3.2",
         "twig/twig": "^2.0 || ^3.0",
         "doctrine/collections": "^1.6",
-        "symfony/stopwatch": "^4.4.1 || ^5.0"
+        "symfony/stopwatch": "^4.4.1 || ^5.0",
+        "league/commonmark-ext-table": "^2.1"
     },
     "require-dev": {
         "satooshi/php-coveralls": "^2.0",

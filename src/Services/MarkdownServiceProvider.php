@@ -7,6 +7,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use League\CommonMark\CommonMarkConverter;
 use League\CommonMark\Environment;
 use League\CommonMark\Ext\InlinesOnly\InlinesOnlyExtension;
+use League\CommonMark\Ext\Table\TableExtension;
 use League\CommonMark\Extras\CommonMarkExtrasExtension;
 use Pimple\Container;
 use Pimple\ServiceProviderInterface;
@@ -36,9 +37,12 @@ final class MarkdownServiceProvider implements ServiceProviderInterface
         };
 
         $container['commonmark.text_converter'] = function (Container $c) {
+            $environment = Environment::createCommonMarkEnvironment();
+            $environment->addExtension(new TableExtension());
+
             return new CommonMarkConverter(
                 $c['commonmark.text_converter.config'],
-                Environment::createCommonMarkEnvironment()
+                $environment
             );
         };
 
