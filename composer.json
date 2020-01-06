@@ -20,6 +20,10 @@
         "friendsofphp/php-cs-fixer": "^2.13",
         "phpstan/phpstan": "^0.11.19"
     },
+    "suggest": {
+        "erusev/parsedown": "If you want to use erusev Markdown parser instead of ThePhpLeague Commonmark",
+        "erusev/parsedown-extra": "If you want to use erusev Markdown parser instead of ThePhpLeague Commonmark"
+    },
     "license": "MIT",
     "authors": [
         {
