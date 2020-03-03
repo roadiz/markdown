@@ -40,53 +40,62 @@ final class MarkdownServiceProvider implements ServiceProviderInterface
             return Environment::createCommonMarkEnvironment();
         });
 
+        $container['commonmark.text_converter.environment'] = function (Container $c) {
+            $environment = $c[Environment::class];
+            $environment->addExtension(new TableExtension());
+            return $environment;
+        };
+        $container['commonmark.text_converter.config'] = function () {
+            return [
+                'html_input' => 'allow'
+            ];
+        };
         $container['commonmark.text_converter'] = function (Container $c) {
             $environment = $c[Environment::class];
             $environment->addExtension(new TableExtension());
 
             return new CommonMarkConverter(
                 $c['commonmark.text_converter.config'],
-                $environment
+                $c['commonmark.text_converter.environment']
             );
         };
 
-        $container['commonmark.text_converter.config'] = function () {
-            return [
-                'html_input' => 'allow'
-            ];
-        };
-
-        $container['commonmark.text_extra_converter'] = function (Container $c) {
+        $container['commonmark.text_extra_converter.environment'] = function (Container $c) {
             $extraEnvironment = $c[Environment::class];
             $extraEnvironment->addExtension(new CommonMarkExtrasExtension());
             $extraEnvironment->addExtension(new FootnoteExtension());
-
-            return new CommonMarkConverter(
-                $c['commonmark.text_extra_converter.config'],
-                $extraEnvironment
-            );
+            return $extraEnvironment;
         };
-
         $container['commonmark.text_extra_converter.config'] = function () {
             return [
                 'html_input' => 'allow'
             ];
         };
+        $container['commonmark.text_extra_converter'] = function (Container $c) {
+            return new CommonMarkConverter(
+                $c['commonmark.text_extra_converter.config'],
+                $c['commonmark.text_extra_converter.environment']
+            );
+        };
 
+        $container['commonmark.line_converter.environment'] = function (Container $c) {
+            $lineEnvironment = new Environment();
+            $lineEnvironment->addExtension(new InlinesOnlyExtension());
+            return $lineEnvironment;
+        };
+        $container['commonmark.line_converter.config'] = function () {
+            return [
+                'html_input' => 'escape'
+            ];
+        };
         $container['commonmark.line_converter'] = function (Container $c) {
             $lineEnvironment = new Environment();
             $lineEnvironment->addExtension(new InlinesOnlyExtension());
 
             return new CommonMarkConverter(
                 $c['commonmark.line_converter.config'],
-                $lineEnvironment
+                $c['commonmark.line_converter.environment']
             );
-        };
-
-        $container['commonmark.line_converter.config'] = function () {
-            return [
-                'html_input' => 'escape'
-            ];
         };
 
         if ($container->offsetExists('twig.extensions')) {
