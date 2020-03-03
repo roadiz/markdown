@@ -36,8 +36,12 @@ final class MarkdownServiceProvider implements ServiceProviderInterface
             );
         };
 
+        $container[Environment::class] = $container->factory(function (Container $c) {
+            return Environment::createCommonMarkEnvironment();
+        });
+
         $container['commonmark.text_converter'] = function (Container $c) {
-            $environment = Environment::createCommonMarkEnvironment();
+            $environment = $c[Environment::class];
             $environment->addExtension(new TableExtension());
 
             return new CommonMarkConverter(
@@ -53,7 +57,7 @@ final class MarkdownServiceProvider implements ServiceProviderInterface
         };
 
         $container['commonmark.text_extra_converter'] = function (Container $c) {
-            $extraEnvironment = Environment::createCommonMarkEnvironment();
+            $extraEnvironment = $c[Environment::class];
             $extraEnvironment->addExtension(new CommonMarkExtrasExtension());
             $extraEnvironment->addExtension(new FootnoteExtension());
 
