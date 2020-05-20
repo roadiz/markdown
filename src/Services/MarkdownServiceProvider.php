@@ -23,6 +23,13 @@ final class MarkdownServiceProvider implements ServiceProviderInterface
 {
     public function register(Container $container)
     {
+        /*
+         * $container[MarkdownInterface::class] = function (Container $c) {
+         *     return new \RZ\Roadiz\Markdown\Parsedown(
+         *         $c->offsetExists('stopwatch') ? $c['stopwatch'] : null
+         *     );
+         * };
+         */
         $container[MarkdownInterface::class] = function (Container $c) {
             return new CommonMark(
                 $c['commonmark.text_converter'],
@@ -32,72 +39,57 @@ final class MarkdownServiceProvider implements ServiceProviderInterface
             );
         };
 
-        $container[Environment::class] = $container->factory(function (Container $c) {
-            return Environment::createCommonMarkEnvironment();
-        });
-
-        $container['commonmark.text_converter.environment'] = function (Container $c) {
-            $environment = $c[Environment::class];
-            $environment->addExtension(new AutolinkExtension());
-            $environment->addExtension(new StrikethroughExtension());
+        $container['commonmark.text_converter'] = function (Container $c) {
+            $environment = Environment::createCommonMarkEnvironment();
             $environment->addExtension(new TableExtension());
-            return $environment;
+
+            return new CommonMarkConverter(
+                $c['commonmark.text_converter.config'],
+                $environment
+            );
         };
+
         $container['commonmark.text_converter.config'] = function () {
             return [
                 'html_input' => 'allow'
             ];
         };
-        $container['commonmark.text_converter'] = function (Container $c) {
-            $environment = $c[Environment::class];
-            $environment->addExtension(new TableExtension());
 
-            return new CommonMarkConverter(
-                $c['commonmark.text_converter.config'],
-                $c['commonmark.text_converter.environment']
-            );
-        };
-
-        $container['commonmark.text_extra_converter.environment'] = function (Container $c) {
-            $extraEnvironment = $c[Environment::class];
+        $container['commonmark.text_extra_converter'] = function (Container $c) {
+            $extraEnvironment = Environment::createCommonMarkEnvironment();
             $extraEnvironment->addExtension(new AutolinkExtension());
             $extraEnvironment->addExtension(new SmartPunctExtension());
             $extraEnvironment->addExtension(new StrikethroughExtension());
             $extraEnvironment->addExtension(new TableExtension());
             $extraEnvironment->addExtension(new TaskListExtension());
             $extraEnvironment->addExtension(new FootnoteExtension());
-            return $extraEnvironment;
+
+            return new CommonMarkConverter(
+                $c['commonmark.text_extra_converter.config'],
+                $extraEnvironment
+            );
         };
+
         $container['commonmark.text_extra_converter.config'] = function () {
             return [
                 'html_input' => 'allow'
             ];
         };
-        $container['commonmark.text_extra_converter'] = function (Container $c) {
-            return new CommonMarkConverter(
-                $c['commonmark.text_extra_converter.config'],
-                $c['commonmark.text_extra_converter.environment']
-            );
-        };
 
-        $container['commonmark.line_converter.environment'] = function (Container $c) {
+        $container['commonmark.line_converter'] = function (Container $c) {
             $lineEnvironment = new Environment();
-            $lineEnvironment->addExtension(new StrikethroughExtension());
             $lineEnvironment->addExtension(new InlinesOnlyExtension());
-            return $lineEnvironment;
+
+            return new CommonMarkConverter(
+                $c['commonmark.line_converter.config'],
+                $lineEnvironment
+            );
         };
 
         $container['commonmark.line_converter.config'] = function () {
             return [
                 'html_input' => 'escape'
             ];
-        };
-
-        $container['commonmark.line_converter'] = function (Container $c) {
-            return new CommonMarkConverter(
-                $c['commonmark.line_converter.config'],
-                $c['commonmark.line_converter.environment']
-            );
         };
 
         if ($container->offsetExists('twig.extensions')) {
