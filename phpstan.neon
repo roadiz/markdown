@@ -7,4 +7,5 @@ parameters:
         - '#unknown class Parsedown(Extra)?#'
         - '#Instantiated class Memcached not found#'
         - '#Instantiated class Redis not found#'
+        - '#Load Parsedown library before using Parsedown wrapper: composer require erusev/parsedown, composer require erusev/parsedown-extra#'
     reportUnmatchedIgnoredErrors: false
