@@ -21,7 +21,7 @@ use RZ\Roadiz\Markdown\Twig\MarkdownExtension;
 
 final class MarkdownServiceProvider implements ServiceProviderInterface
 {
-    public function register(Container $container)
+    public function register(Container $container): void
     {
         /*
          * $container[MarkdownInterface::class] = function (Container $c) {
