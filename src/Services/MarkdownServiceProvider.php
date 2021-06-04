@@ -41,7 +41,7 @@ final class MarkdownServiceProvider implements ServiceProviderInterface
             );
         };
 
-        $pimple['commonmark.text_converter.default'] = function () {
+        $pimple['commonmark.text_converter.config.default'] = function () {
             return [
                 'external_link' => [
                     'open_in_new_window' => true,
@@ -52,7 +52,7 @@ final class MarkdownServiceProvider implements ServiceProviderInterface
         };
 
         $pimple['commonmark.text_converter.config'] = function (Container $c) {
-            return array_merge($c['commonmark.text_converter.default'], [
+            return array_merge($c['commonmark.text_converter.config.default'], [
                 'html_input' => 'allow'
             ]);
         };
@@ -65,7 +65,7 @@ final class MarkdownServiceProvider implements ServiceProviderInterface
             $environment = Environment::createCommonMarkEnvironment();
             $environment->addExtension(new TableExtension());
             $environment->addExtension(new ExternalLinkExtension());
-            $environment->mergeConfig($c['commonmark.text_converter.environment']);
+            $environment->mergeConfig($c['commonmark.text_converter.config']);
             return $environment;
         };
 
@@ -80,7 +80,7 @@ final class MarkdownServiceProvider implements ServiceProviderInterface
         };
 
         $pimple['commonmark.text_extra_converter.config'] = function (Container $c) {
-            return array_merge($c['commonmark.text_converter.default'], [
+            return array_merge($c['commonmark.text_converter.config.default'], [
                 'html_input' => 'allow'
             ]);
         };
@@ -113,7 +113,7 @@ final class MarkdownServiceProvider implements ServiceProviderInterface
         };
 
         $pimple['commonmark.line_converter.config'] = function (Container $c) {
-            return array_merge($c['commonmark.text_converter.default'], [
+            return array_merge($c['commonmark.text_converter.config.default'], [
                 'html_input' => 'escape'
             ]);
         };
