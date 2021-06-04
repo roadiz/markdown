@@ -12,8 +12,6 @@ if (!class_exists('\Parsedown')) {
     );
 }
 /**
- * Class Parsedown
- *
  * @package RZ\Roadiz\Markdown
  */
 final class Parsedown implements MarkdownInterface
