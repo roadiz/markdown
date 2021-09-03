@@ -3,8 +3,8 @@
     "description": "Markdown services and Twig extension for Roadiz",
     "type": "library",
     "require": {
-        "php": ">=7.2",
-        "league/commonmark": "^1.5",
+        "php": ">=7.4",
+        "league/commonmark": "^2.0.0",
         "pimple/pimple": "^3.3.1",
         "twig/twig": "^2.0 || ^3.1",
         "doctrine/collections": "^1.6",

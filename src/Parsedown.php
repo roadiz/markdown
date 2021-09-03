@@ -30,8 +30,6 @@ final class Parsedown implements MarkdownInterface
     private $instanceExtra;
 
     /**
-     * Parsedown constructor.
-     *
      * @param Stopwatch|null $stopwatch
      */
     public function __construct(?Stopwatch $stopwatch = null)

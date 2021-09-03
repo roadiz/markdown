@@ -24,7 +24,7 @@ interface MarkdownInterface
     public function textExtra(string $markdown = null): string;
 
     /**
-     * Convert Markdown to HTML using only inline HTML elements..
+     * Convert Markdown to HTML using only inline HTML elements.
      *
      * @param string|null $markdown
      *

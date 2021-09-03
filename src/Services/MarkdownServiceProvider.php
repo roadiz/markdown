@@ -4,9 +4,9 @@ declare(strict_types=1);
 namespace RZ\Roadiz\Markdown\Services;
 
 use Doctrine\Common\Collections\ArrayCollection;
-use League\CommonMark\ConfigurableEnvironmentInterface;
-use League\CommonMark\Environment;
+use League\CommonMark\Environment\Environment;
 use League\CommonMark\Extension\Autolink\AutolinkExtension;
+use League\CommonMark\Extension\CommonMark\CommonMarkCoreExtension;
 use League\CommonMark\Extension\ExternalLink\ExternalLinkExtension;
 use League\CommonMark\Extension\Footnote\FootnoteExtension;
 use League\CommonMark\Extension\InlinesOnly\InlinesOnlyExtension;
@@ -59,13 +59,13 @@ final class MarkdownServiceProvider implements ServiceProviderInterface
 
         /**
          * @param Container $c
-         * @return ConfigurableEnvironmentInterface
+         * @return Environment
          */
         $pimple['commonmark.text_converter.environment'] = function (Container $c) {
-            $environment = Environment::createCommonMarkEnvironment();
+            $environment = new Environment($c['commonmark.text_converter.config']);
+            $environment->addExtension(new CommonMarkCoreExtension());
             $environment->addExtension(new TableExtension());
             $environment->addExtension(new ExternalLinkExtension());
-            $environment->mergeConfig($c['commonmark.text_converter.config']);
             return $environment;
         };
 
@@ -87,10 +87,11 @@ final class MarkdownServiceProvider implements ServiceProviderInterface
 
         /**
          * @param Container $c
-         * @return ConfigurableEnvironmentInterface
+         * @return Environment
          */
         $pimple['commonmark.text_extra_converter.environment'] = function (Container $c) {
-            $extraEnvironment = Environment::createCommonMarkEnvironment();
+            $extraEnvironment = new Environment($c['commonmark.text_extra_converter.config']);
+            $extraEnvironment->addExtension(new CommonMarkCoreExtension());
             $extraEnvironment->addExtension(new AutolinkExtension());
             $extraEnvironment->addExtension(new ExternalLinkExtension());
             $extraEnvironment->addExtension(new SmartPunctExtension());
@@ -98,7 +99,6 @@ final class MarkdownServiceProvider implements ServiceProviderInterface
             $extraEnvironment->addExtension(new TableExtension());
             $extraEnvironment->addExtension(new TaskListExtension());
             $extraEnvironment->addExtension(new FootnoteExtension());
-            $extraEnvironment->mergeConfig($c['commonmark.text_extra_converter.config']);
             return $extraEnvironment;
         };
 
@@ -123,10 +123,9 @@ final class MarkdownServiceProvider implements ServiceProviderInterface
          * @return Environment
          */
         $pimple['commonmark.line_converter.environment'] = function (Container $c) {
-            $lineEnvironment = new Environment();
+            $lineEnvironment = new Environment($c['commonmark.line_converter.config']);
             $lineEnvironment->addExtension(new InlinesOnlyExtension());
             $lineEnvironment->addExtension(new ExternalLinkExtension());
-            $lineEnvironment->mergeConfig($c['commonmark.line_converter.config']);
             return $lineEnvironment;
         };
 
