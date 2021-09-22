@@ -8,22 +8,10 @@ use Symfony\Component\Stopwatch\Stopwatch;
 
 final class CommonMark implements MarkdownInterface
 {
-    /**
-     * @var Stopwatch|null
-     */
-    protected $stopwatch;
-    /**
-     * @var MarkdownConverter
-     */
-    private $textConverter;
-    /**
-     * @var MarkdownConverter
-     */
-    private $lineConverter;
-    /**
-     * @var MarkdownConverter
-     */
-    private $textExtraConverter;
+    private ?Stopwatch $stopwatch;
+    private MarkdownConverter $textConverter;
+    private MarkdownConverter $lineConverter;
+    private MarkdownConverter $textExtraConverter;
 
     /**
      * @param MarkdownConverter $textConverter
@@ -51,7 +39,7 @@ final class CommonMark implements MarkdownInterface
         if (null !== $this->stopwatch) {
             $this->stopwatch->start(CommonMark::class . '::text');
         }
-        $html = $this->textConverter->convertToHtml($markdown);
+        $html = $this->textConverter->convertToHtml($markdown)->getContent();
         if (null !== $this->stopwatch) {
             $this->stopwatch->stop(CommonMark::class . '::text');
         }
@@ -66,7 +54,7 @@ final class CommonMark implements MarkdownInterface
         if (null !== $this->stopwatch) {
             $this->stopwatch->start(CommonMark::class . '::textExtra');
         }
-        $html = $this->textExtraConverter->convertToHtml($markdown);
+        $html = $this->textExtraConverter->convertToHtml($markdown)->getContent();
         if (null !== $this->stopwatch) {
             $this->stopwatch->stop(CommonMark::class . '::textExtra');
         }
@@ -81,7 +69,7 @@ final class CommonMark implements MarkdownInterface
         if (null !== $this->stopwatch) {
             $this->stopwatch->start(CommonMark::class . '::line');
         }
-        $html = $this->lineConverter->convertToHtml($markdown);
+        $html = $this->lineConverter->convertToHtml($markdown)->getContent();
         if (null !== $this->stopwatch) {
             $this->stopwatch->stop(CommonMark::class . '::line');
         }

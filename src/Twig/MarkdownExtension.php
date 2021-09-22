@@ -9,14 +9,9 @@ use Twig\TwigFilter;
 
 final class MarkdownExtension extends AbstractExtension
 {
-    /**
-     * @var MarkdownInterface
-     */
-    protected $markdown;
+    private MarkdownInterface $markdown;
 
     /**
-     * MarkdownExtension constructor.
-     *
      * @param MarkdownInterface $markdown
      */
     public function __construct(MarkdownInterface $markdown)
