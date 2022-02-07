@@ -25,13 +25,6 @@ final class MarkdownServiceProvider implements ServiceProviderInterface
 {
     public function register(Container $pimple): void
     {
-        /*
-         * $pimple[MarkdownInterface::class] = function (Container $c) {
-         *     return new \RZ\Roadiz\Markdown\Parsedown(
-         *         $c->offsetExists('stopwatch') ? $c['stopwatch'] : null
-         *     );
-         * };
-         */
         $pimple[MarkdownInterface::class] = function (Container $c) {
             return new CommonMark(
                 $c['commonmark.text_converter'],

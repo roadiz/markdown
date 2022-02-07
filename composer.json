@@ -14,10 +14,6 @@
         "squizlabs/php_codesniffer": "^3.5",
         "phpstan/phpstan": "^0.12.57"
     },
-    "suggest": {
-        "erusev/parsedown": "If you want to use erusev Markdown parser instead of ThePhpLeague Commonmark",
-        "erusev/parsedown-extra": "If you want to use erusev Markdown parser instead of ThePhpLeague Commonmark"
-    },
     "license": "MIT",
     "authors": [
         {
