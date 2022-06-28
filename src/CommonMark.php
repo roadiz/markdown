@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace RZ\Roadiz\Markdown;
@@ -39,7 +40,7 @@ final class CommonMark implements MarkdownInterface
         if (null !== $this->stopwatch) {
             $this->stopwatch->start(CommonMark::class . '::text');
         }
-        $html = $this->textConverter->convertToHtml($markdown)->getContent();
+        $html = $this->textConverter->convert($markdown)->getContent();
         if (null !== $this->stopwatch) {
             $this->stopwatch->stop(CommonMark::class . '::text');
         }
@@ -54,7 +55,7 @@ final class CommonMark implements MarkdownInterface
         if (null !== $this->stopwatch) {
             $this->stopwatch->start(CommonMark::class . '::textExtra');
         }
-        $html = $this->textExtraConverter->convertToHtml($markdown)->getContent();
+        $html = $this->textExtraConverter->convert($markdown)->getContent();
         if (null !== $this->stopwatch) {
             $this->stopwatch->stop(CommonMark::class . '::textExtra');
         }
@@ -69,7 +70,7 @@ final class CommonMark implements MarkdownInterface
         if (null !== $this->stopwatch) {
             $this->stopwatch->start(CommonMark::class . '::line');
         }
-        $html = $this->lineConverter->convertToHtml($markdown)->getContent();
+        $html = $this->lineConverter->convert($markdown)->getContent();
         if (null !== $this->stopwatch) {
             $this->stopwatch->stop(CommonMark::class . '::line');
         }
