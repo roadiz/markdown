@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace RZ\Roadiz\Markdown\Twig;
@@ -11,15 +12,12 @@ final class MarkdownExtension extends AbstractExtension
 {
     private MarkdownInterface $markdown;
 
-    /**
-     * @param MarkdownInterface $markdown
-     */
     public function __construct(MarkdownInterface $markdown)
     {
         $this->markdown = $markdown;
     }
 
-    public function getFilters()
+    public function getFilters(): array
     {
         return [
             new TwigFilter('markdown', [$this, 'markdown'], ['is_safe' => ['html']]),
