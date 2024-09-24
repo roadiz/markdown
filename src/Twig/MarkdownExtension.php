@@ -10,8 +10,11 @@ use Twig\TwigFilter;
 
 final class MarkdownExtension extends AbstractExtension
 {
-    public function __construct(private readonly MarkdownInterface $markdown)
+    private MarkdownInterface $markdown;
+
+    public function __construct(MarkdownInterface $markdown)
     {
+        $this->markdown = $markdown;
     }
 
     public function getFilters(): array
