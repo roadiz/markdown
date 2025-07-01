@@ -10,8 +10,11 @@ use Twig\TwigFilter;
 
 final class MarkdownExtension extends AbstractExtension
 {
-    public function __construct(private readonly MarkdownInterface $markdown)
+    private MarkdownInterface $markdown;
+
+    public function __construct(MarkdownInterface $markdown)
     {
+        $this->markdown = $markdown;
     }
 
     public function getFilters(): array
@@ -25,30 +28,42 @@ final class MarkdownExtension extends AbstractExtension
         ];
     }
 
+    /**
+     * @param string|null $input
+     *
+     * @return string
+     */
     public function markdown(?string $input): string
     {
         if (null === $input) {
             return '';
         }
-
         return $this->markdown->text($input);
     }
 
+    /**
+     * @param string|null $input
+     *
+     * @return string
+     */
     public function inlineMarkdown(?string $input): string
     {
         if (null === $input) {
             return '';
         }
-
         return $this->markdown->line($input);
     }
 
+    /**
+     * @param string|null $input
+     *
+     * @return string
+     */
     public function markdownExtra(?string $input): string
     {
         if (null === $input) {
             return '';
         }
-
         return $this->markdown->textExtra($input);
     }
 }
