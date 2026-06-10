@@ -17,7 +17,6 @@ final readonly class CommonMark implements MarkdownInterface
     ) {
     }
 
-    #[\Override]
     public function text(?string $markdown = null): string
     {
         if (null === $markdown) {
@@ -30,7 +29,6 @@ final readonly class CommonMark implements MarkdownInterface
         return $html;
     }
 
-    #[\Override]
     public function textExtra(?string $markdown = null): string
     {
         if (null === $markdown) {
@@ -43,7 +41,6 @@ final readonly class CommonMark implements MarkdownInterface
         return $html;
     }
 
-    #[\Override]
     public function line(?string $markdown = null): string
     {
         if (null === $markdown) {
