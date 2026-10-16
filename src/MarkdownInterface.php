@@ -9,26 +9,27 @@ interface MarkdownInterface
     /**
      * Convert Markdown to HTML using standard Markdown syntax.
      *
-     * @param bool $allowHtml Pass true to allow raw HTML (including script/style tags) through
-     *                        unchanged. Defaults to false (raw HTML is stripped).
+     * @param string|null $markdown
+     *
+     * @return string
      */
-    public function text(?string $markdown = null, bool $allowHtml = false): string;
+    public function text(string $markdown = null): string;
 
     /**
      * Convert Markdown to HTML using standard Markdown Extra syntax.
      *
-     * @param bool $allowHtml Pass true to allow raw HTML (including script/style tags) through
-     *                        unchanged. Defaults to false (raw HTML is stripped).
+     * @param string|null $markdown
+     *
+     * @return string
      */
-    public function textExtra(?string $markdown = null, bool $allowHtml = false): string;
+    public function textExtra(string $markdown = null): string;
 
     /**
      * Convert Markdown to HTML using only inline HTML elements.
+     *
+     * @param string|null $markdown
+     *
+     * @return string
      */
-    public function line(?string $markdown = null): string;
-
-    /**
-     * Convert Markdown then strip tags, control characters and replace br with whitespace.
-     */
-    public function strip(?string $markdown = null): ?string;
+    public function line(string $markdown = null): string;
 }
